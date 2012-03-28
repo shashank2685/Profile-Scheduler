@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:title="@string/set_profile">
+    <CheckBoxPreference android:key="enabled"
+        android:persistent="false"
+        android:title="@string/enable_profile" />
+    <Preference android:key="starttime"
+        android:persistent="false"
+        android:title="@string/start_time"/>
+    <Preference android:key="endtime"
+        android:persistent="false"
+        android:title="@string/end_time"/>
+    <edu.buffalo.scheduler.RepeatPreference
+        android:persistent="false"
+        android:key="setRepeat"
+        android:title="@string/profile_repeat" />
+    <CheckBoxPreference android:key="vibrate"
+        android:persistent="false"
+        android:title="@string/profile_vibrate"/>
+     <CheckBoxPreference android:key="silent"
+        android:persistent="false"
+        android:title="@string/profile_silent"/>
+    <EditTextPreference android:key="label"
+        android:persistent="false"
+        android:title="@string/label"
+        android:dialogTitle="@string/label" />
+</PreferenceScreen>
