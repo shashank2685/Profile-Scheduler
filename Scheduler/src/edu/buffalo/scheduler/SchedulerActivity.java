@@ -93,7 +93,12 @@ public class SchedulerActivity extends Activity implements OnItemClickListener {
 			final Calendar c = Calendar.getInstance();
 			c.set(Calendar.HOUR_OF_DAY, profile.starthour);
 			c.set(Calendar.MINUTE, profile.startminutes);
-			digitalClock.updateTime(c);
+			
+			final Calendar c2 = Calendar.getInstance();
+			c2.set(Calendar.HOUR_OF_DAY, profile.endhour);
+			c2.set(Calendar.MINUTE, profile.endminutes);
+			
+			digitalClock.updateTime(c, c2);
 			digitalClock.setTypeface(Typeface.DEFAULT);
 
 			// Set the repeat text or leave it blank if it does not repeat.

@@ -82,20 +82,20 @@ Preference.OnPreferenceChangeListener {
 
 		Intent i = getIntent();
 		Profile profile;
-		
+
 		mId = i.getIntExtra(ProfileDbAdapter.KEY_ROWID,-1);
 		if (mId == -1) {
-            // No alarm id means create a new alarm.
-            profile = new Profile();
-        } else {
-            /* load alarm details from database */
-            profile = Profiles.getProfile(this, mId);
-            // Bad alarm, bail to avoid a NPE.
-            if (profile == null) {
-                finish();
-                return;
-            }
-        }
+			// No alarm id means create a new alarm.
+			profile = new Profile();
+		} else {
+			/* load alarm details from database */
+			profile = Profiles.getProfile(this, mId);
+			// Bad alarm, bail to avoid a NPE.
+			if (profile == null) {
+				finish();
+				return;
+			}
+		}
 		mOriginalProfile = profile;
 		updatePrefs(mOriginalProfile);
 
@@ -115,7 +115,7 @@ Preference.OnPreferenceChangeListener {
 			public void onClick(View v) {
 				int newId = mId;
 				updatePrefs(mOriginalProfile);
-				
+
 				if (mOriginalProfile.id == -1) {
 					Profiles.deleteProfile(SetProfile.this, mId);
 				} else {
@@ -192,7 +192,7 @@ Preference.OnPreferenceChangeListener {
 		}
 		return time;
 	}
-	
+
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
@@ -218,7 +218,7 @@ Preference.OnPreferenceChangeListener {
 			mEndMinutes = minute;
 			updateTime(mEndTimePref);
 		}
-		
+
 		mEnabledPref.setChecked(true);
 		saveProfileAndEnableRevert();
 	}
@@ -232,8 +232,14 @@ Preference.OnPreferenceChangeListener {
 	}
 
 	private void showTimePicker() {
-		new TimePickerDialog(this, this, mStartHour, mStartMinutes,
-				DateFormat.is24HourFormat(this)).show();
+		if ( clickedTimePref == mStartTimePref) {
+			new TimePickerDialog(this, this, mStartHour, mStartMinutes,
+					DateFormat.is24HourFormat(this)).show();
+		} else {
+			new TimePickerDialog(this, this, mEndHour, mEndMinutes,
+					DateFormat.is24HourFormat(this)).show();
+
+		}
 	}
 
 	private void deleteAlarm() {

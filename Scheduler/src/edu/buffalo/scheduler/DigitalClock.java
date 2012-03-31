@@ -42,8 +42,10 @@ public class DigitalClock extends LinearLayout {
     private final static String M12 = "h:mm";
 
     private Calendar mCalendar;
+    private Calendar mCalendar1;
     private String mFormat;
     private TextView mTimeDisplay;
+    private TextView mTimeDisplay1;
     private AmPm mAmPm;
     private ContentObserver mFormatChangeObserver;
     private boolean mLive = true;
@@ -71,7 +73,9 @@ public class DigitalClock extends LinearLayout {
 
     static class AmPm {
         private TextView mAmPm;
+        private TextView mAmPm1;
         private String mAmString, mPmString;
+        
 
         AmPm(View parent) {
             mAmPm = (TextView) parent.findViewById(R.id.am_pm);
@@ -79,14 +83,19 @@ public class DigitalClock extends LinearLayout {
             String[] ampm = new DateFormatSymbols().getAmPmStrings();
             mAmString = ampm[0];
             mPmString = ampm[1];
+            
+            mAmPm1 = (TextView) parent.findViewById(R.id.am_pm1);
+            
         }
 
         void setShowAmPm(boolean show) {
             mAmPm.setVisibility(show ? View.VISIBLE : View.GONE);
+            mAmPm1.setVisibility(show ? View.VISIBLE : View.GONE);
         }
 
         void setIsMorning(boolean isMorning) {
             mAmPm.setText(isMorning ? mAmString : mPmString);
+            mAmPm1.setText(isMorning ? mAmString : mPmString);
         }
     }
 
@@ -119,8 +128,11 @@ public class DigitalClock extends LinearLayout {
         }
         mTimeDisplay = (TextView) findViewById(R.id.timeDisplay);
         mTimeDisplay.setTypeface(sTypeface);
+        mTimeDisplay1 = (TextView) findViewById(R.id.timeDisplay1);
+        mTimeDisplay1.setTypeface(sTypeface);
         mAmPm = new AmPm(this);
         mCalendar = Calendar.getInstance();
+        mCalendar1 = Calendar.getInstance();
 
         setDateFormat();
     }
@@ -165,8 +177,9 @@ public class DigitalClock extends LinearLayout {
     }
 
 
-    void updateTime(Calendar c) {
+    void updateTime(Calendar c, Calendar c1) {
         mCalendar = c;
+        mCalendar1 = c1;
         updateTime();
     }
 
@@ -176,7 +189,9 @@ public class DigitalClock extends LinearLayout {
         }
 
         CharSequence newTime = DateFormat.format(mFormat, mCalendar);
+        CharSequence newTime1 = DateFormat.format(mFormat, mCalendar1);
         mTimeDisplay.setText(newTime);
+        mTimeDisplay1.setText("-" + newTime1);
         mAmPm.setIsMorning(mCalendar.get(Calendar.AM_PM) == 0);
     }
 
@@ -191,5 +206,6 @@ public class DigitalClock extends LinearLayout {
 
     void setTypeface(Typeface tf) {
         mTimeDisplay.setTypeface(tf);
+        mTimeDisplay1.setTypeface(tf);
     }
 }
